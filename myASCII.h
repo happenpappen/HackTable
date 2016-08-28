@@ -5,8 +5,8 @@
 #include <string.h>
 
 void zeile_loeschen(int zeile);
-void Lauftext_von_oben(String txt, int x,int pause,CRGB fg_color, CRGB bg_color);
-void Lauftext_von_unten(String txt, int x,int pause,CRGB fg_color, CRGB bg_color);
+void Lauftext_von_oben(String txt, int x, int pause, CRGB fg_color, CRGB bg_color);
+void Lauftext_von_unten(String txt, int x, int pause, CRGB fg_color, CRGB bg_color);
 void Lauftext_von_rechts(String txt, int y, int bremse, CRGB fg_color, CRGB bg_color);
 void Lauftext2(String txt, int x, int y, int bremse, CRGB fg_color, CRGB bg_color);
 void Lauftext_blenden(String txt, int x, int y, int warten, CRGB fg_color, CRGB bg_color);

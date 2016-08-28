@@ -18,7 +18,7 @@ CRGB bg_color = CRGB(0, 0, 0);
 
 bool displayEnabled = true;
 
-void mqtt_callback(char*, byte*, unsigned int);
+void mqtt_callback(char *, byte *, unsigned int);
 void publishState();
 void saveSettings();
 void loadSettings();
@@ -53,7 +53,8 @@ unsigned long lastSync = millis();
 
 int dispMode = 2;
 
-void mqtt_callback(char* topic, byte* payload, unsigned int length) {
+void mqtt_callback(char *topic, byte *payload, unsigned int length)
+{
     // handle message arrived - we are only subscribing to one topic so assume all are led related
 
     String myTopic = String(topic);
@@ -68,7 +69,7 @@ void mqtt_callback(char* topic, byte* payload, unsigned int length) {
 
 
     if (!client.isConnected()) {
-        client.connect("tisch", "tisch", "20d6d57b564da56dfade42afbfd50b14");
+        client.connect("tisch", MQTT_USER, MQTT_PASSWORD);
     }
 
     client.publish("/tisch/state/LastPayload", "Last Payload: " + String(myPayload));
@@ -101,7 +102,8 @@ void mqtt_callback(char* topic, byte* payload, unsigned int length) {
     myPayload = NULL;
 }
 
-int incBrightness(String command) {
+int incBrightness(String command)
+{
     brightness++;
     FastLED.setBrightness(brightness);
 
@@ -109,7 +111,8 @@ int incBrightness(String command) {
     return brightness;
 }
 
-int decBrightness(String command) {
+int decBrightness(String command)
+{
     brightness--;
     brightness = (brightness < 0) ? 0 : brightness;
     FastLED.setBrightness(brightness);
@@ -118,11 +121,13 @@ int decBrightness(String command) {
     return brightness;
 }
 
-int getBrightness(String command) {
+int getBrightness(String command)
+{
     return brightness;
 }
 
-int setBrightness(String value) {
+int setBrightness(String value)
+{
     brightness = atoi(value);
     FastLED.setBrightness(brightness);
 
@@ -130,27 +135,31 @@ int setBrightness(String value) {
     return brightness;
 }
 
-int enableDisplay(String command) {
+int enableDisplay(String command)
+{
     displayEnabled = true;
 
     saveSettings();
     return 1;
 }
 
-int disableDisplay(String command) {
+int disableDisplay(String command)
+{
     displayEnabled = false;
 
     saveSettings();
     return 1;
 }
 
-String getFgColor() {
+String getFgColor()
+{
 
     return String::format("#%0#2X%0#2X%0#2X", fg_color.red, fg_color.green, fg_color.blue);
 
 }
 
-int setFgColor(String command) {
+int setFgColor(String command)
+{
     char *rgbstr = (char *) malloc(command.length() + 1);
 
     rgbstr = strcpy(rgbstr, (const char *) command);
@@ -169,12 +178,14 @@ int setFgColor(String command) {
     return 1;
 }
 
-String getBgColor() {
+String getBgColor()
+{
 
     return String::format("#%0#2X%0#2X%0#2X", bg_color.red, bg_color.green, bg_color.blue);
 }
 
-int setBgColor(String command) {
+int setBgColor(String command)
+{
     char *rgbstr = (char *) malloc(command.length() + 1);
 
     rgbstr = strcpy(rgbstr, (const char *) command);
@@ -193,33 +204,44 @@ int setBgColor(String command) {
     return 1;
 }
 
-int getDisplayMode(String command) {
+int getDisplayMode(String command)
+{
     return dispMode;
 }
 
-int setDisplayMode(String command) {
+int setDisplayMode(String command)
+{
     dispMode = atoi(command);
 
     switch (dispMode) {
-        case 1: setupGameOfLife();
-            break;
-        case 2: setupNoise();
-            break;
-        case 3: setupTimeDate();
-            break;
-        case 4: setupRainbowCycle();
-            break;
-        case 5: setupNoisePlusPalette();
-            break;
-        default:
-            break;
+    case 1:
+        setupGameOfLife();
+        break;
+    case 2:
+        setupNoise();
+        break;
+    case 3:
+        setupTimeDate();
+        break;
+    case 4:
+        setupRainbowCycle();
+        break;
+    case 5:
+        setupNoisePlusPalette();
+        break;
+    case 6:
+        setupSingleColor();
+        break;
+    default:
+        break;
     }
 
     saveSettings();
     return dispMode;
 }
 
-void loadSettings() {
+void loadSettings()
+{
     int address = 1;
 
     brightness = EEPROM.read(address++);
@@ -237,7 +259,8 @@ void loadSettings() {
     }
 }
 
-void publishState() {
+void publishState()
+{
 
     if (!client.isConnected()) {
         client.connect("tisch", MQTT_USER, MQTT_PASSWORD);
@@ -251,7 +274,8 @@ void publishState() {
     }
 }
 
-void saveSettings() {
+void saveSettings()
+{
     int address = 1;
 
     EEPROM.write(address++, brightness);
@@ -269,47 +293,41 @@ void saveSettings() {
     }
 }
 
-void setup() {
-
-    // register the cloud function
-    Particle.function("incBright", incBrightness);
-    Particle.function("decBright", decBrightness);
-    Particle.function("getBright", getBrightness);
-    Particle.function("setBright", setBrightness);
-    Particle.function("enaDisplay", enableDisplay);
-    Particle.function("disDisplay", disableDisplay);
-    Particle.function("getDisMode", getDisplayMode);
-    Particle.function("setDisMode", setDisplayMode);
-    Particle.variable("dispMode", dispMode);
-    Particle.function("setFgColor", setFgColor);
-    Particle.function("setBgColor", setBgColor);
+void setup()
+{
 
     loadSettings();
 
     dispMode = 2;
 
     switch (dispMode) {
-        case 1: setupGameOfLife();
-            break;
-        case 2: setupNoise();
-            break;
-        case 3: setupTimeDate();
-            break;
-        case 4: setupRainbowCycle();
-            break;
-        case 5: setupNoisePlusPalette();
-            break;
-        case 6: setupSingleColor();
-            break;
-        default:
-            break;
+    case 1:
+        setupGameOfLife();
+        break;
+    case 2:
+        setupNoise();
+        break;
+    case 3:
+        setupTimeDate();
+        break;
+    case 4:
+        setupRainbowCycle();
+        break;
+    case 5:
+        setupNoisePlusPalette();
+        break;
+    case 6:
+        setupSingleColor();
+        break;
+    default:
+        break;
     }
 
     Time.zone(+1);
     FastLED.addLeds<WS2812B, DATA_PIN>(leds, NUM_LEDS);
     FastLED.setBrightness(brightness);
 
-    client.connect("tisch", "tisch", "2ca312176b28fc015687c3637fb677e4"); // uid:pwd based authentication
+    client.connect("tisch", MQTT_USER, MQTT_PASSWORD); // uid:pwd based authentication
 
     if (client.isConnected()) {
         PublisherTimer.start();
@@ -318,7 +336,8 @@ void setup() {
 
 }
 
-void loop() {
+void loop()
+{
 
     // once a day sync time with cloud:
     if (millis() - lastSync > ONE_DAY_MILLIS) {
@@ -329,20 +348,26 @@ void loop() {
 
     if (displayEnabled) {
         switch (dispMode) {
-            case 1: loopGameOfLife();
-                break;
-            case 2: loopNoise();
-                break;
-            case 3: loopTimeDate();
-                break;
-            case 4: loopRainbowCycle();
-                break;
-            case 5: loopNoisePlusPalette();
-                break;
-            case 6: loopSingleColor();
-                break;
-            default:
-                break;
+        case 1:
+            loopGameOfLife();
+            break;
+        case 2:
+            loopNoise();
+            break;
+        case 3:
+            loopTimeDate();
+            break;
+        case 4:
+            loopRainbowCycle();
+            break;
+        case 5:
+            loopNoisePlusPalette();
+            break;
+        case 6:
+            loopSingleColor();
+            break;
+        default:
+            break;
         }
     } else {
         for (int i = 0; i < kMatrixWidth; i++) {

@@ -45,7 +45,6 @@
       <in>MQTT.h</in>
       <in>MQTT_credentials.h</in>
       <in>Tisch.cpp</in>
-      <in>Tisch.ino</in>
       <in>bitswap.h</in>
       <in>chipsets.h</in>
       <in>clockless_arm_stm32.h</in>
