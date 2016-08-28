@@ -6,7 +6,9 @@
 #include "myUtils.h"
 #include "myTimeDate.h"
 #include "myRainbowCycle.h"
+#include "mySingleColor.h"
 #include "MQTT.h"
+#include "MQTT_credentials.h"
 
 CRGB leds[NUM_LEDS];
 
@@ -21,8 +23,8 @@ void publishState();
 void saveSettings();
 void loadSettings();
 
-MQTT client("stop.pe", 1883, mqtt_callback);
-Timer publisher(5000, publishState);
+MQTT client(MQTT_HOST, 1883, mqtt_callback);
+Timer PublisherTimer(5000, publishState);
 
 // functions to call via cloud:
 int incBrightness(String command);
@@ -47,6 +49,7 @@ unsigned long lastSync = millis();
 // 3: Time and Date
 // 4: RainbowCycle
 // 5: NoisePlusPalette
+// 6: SingleColor
 
 int dispMode = 2;
 
@@ -237,7 +240,7 @@ void loadSettings() {
 void publishState() {
 
     if (!client.isConnected()) {
-        client.connect("tisch", "tisch", "2ca312176b28fc015687c3637fb677e4");
+        client.connect("tisch", MQTT_USER, MQTT_PASSWORD);
     }
 
     if (client.isConnected()) {
@@ -296,6 +299,8 @@ void setup() {
             break;
         case 5: setupNoisePlusPalette();
             break;
+        case 6: setupSingleColor();
+            break;
         default:
             break;
     }
@@ -307,7 +312,7 @@ void setup() {
     client.connect("tisch", "tisch", "2ca312176b28fc015687c3637fb677e4"); // uid:pwd based authentication
 
     if (client.isConnected()) {
-        publisher.start();
+        PublisherTimer.start();
         client.subscribe("/tisch/set/+");
     }
 
@@ -333,6 +338,8 @@ void loop() {
             case 4: loopRainbowCycle();
                 break;
             case 5: loopNoisePlusPalette();
+                break;
+            case 6: loopSingleColor();
                 break;
             default:
                 break;

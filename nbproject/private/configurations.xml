@@ -43,6 +43,7 @@
       <in>FastSPI_LED2.h</in>
       <in>MQTT.cpp</in>
       <in>MQTT.h</in>
+      <in>MQTT_credentials.h</in>
       <in>Tisch.cpp</in>
       <in>Tisch.ino</in>
       <in>bitswap.h</in>
@@ -85,6 +86,8 @@
       <in>myNoisePlusPalette.h</in>
       <in>myRainbowCycle.cpp</in>
       <in>myRainbowCycle.h</in>
+      <in>mySingleColor.cpp</in>
+      <in>mySingleColor.h</in>
       <in>myTimeDate.cpp</in>
       <in>myTimeDate.h</in>
       <in>myTischConfig.h</in>
