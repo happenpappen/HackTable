@@ -1,7 +1,7 @@
 // MQTT Items HackTable
 //
-Number HackTable_DisplayMode { mqtt=">[mqtt_config_name:/tisch/set/DisplayMode:command:*:default], <[mqtt_config_name:/tisch/state/DisplayMode:state:default]" }
-Number HackTable_Brightness { mqtt=">[mqtt_config_name:/tisch/set/Brightness:command:*:JS(brightness_out.js)], <[mqtt_config_name:/tisch/state/Brightness:state:JS(brightness_in.js)]" }
-Color HackTable_ForgroundColor { mqtt=">[mqtt_config_name:/tisch/set/ForgroundColor:command:*:default], <[mqtt_config_name:/tisch/state/ForgroundColor:state:default]" }
-Color HackTable_BackgroundColor { mqtt=">[mqtt_config_name:/tisch/set/BackgroundColor:command:*:default], <[mqtt_config_name:/tisch/state/BackgroundColor:state:default]" }
+Number HackTable_DisplayMode { mqtt=">[mqtt_config_name:/<insert id of your photon device here>/set/DisplayMode:command:*:default], <[mqtt_config_name:/<insert id of your photon device here>/state/DisplayMode:state:default]" }
+Number HackTable_Brightness { mqtt=">[mqtt_config_name:/<insert id of your photon device here>/set/Brightness:command:*:JS(brightness_out.js)], <[mqtt_config_name:/insert id of your photon device here>/state/Brightness:state:JS(brightness_in.js)]" }
+Color HackTable_ForgroundColor { mqtt=">[mqtt_config_name:/<insert id of your photon device here>/set/ForgroundColor:command:*:default], <[mqtt_config_name:/<insert id of your photon device here>/state/ForgroundColor:state:default]" }
+Color HackTable_BackgroundColor { mqtt=">[mqtt_config_name:/<insert id of your photon device here>/set/BackgroundColor:command:*:default], <[mqtt_config_name:/<insert id of your photon device here>/state/BackgroundColor:state:default]" }
 
