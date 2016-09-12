@@ -1,4 +1,4 @@
-# HackTableFirmware
+# HackTable
 This is a firmware for a Photon Particle based, hacked Ikea Lack table
 
 **Note:** This projects needs a Photon Particle device running and connected to the cloud. You may find all documentation about this device on http://particle.io
@@ -6,7 +6,7 @@ This is a firmware for a Photon Particle based, hacked Ikea Lack table
 ## This project consists of three components:
 - A modified Ikea Lack table, instructions to build this can be found here: http://instructables.com/....
 - This firmware project
-- The companion app (Android only, sorry) to control the device, which you may find here: https://github.com/happenpappen/HackTable
+- An installation of OpenHab (http://www.openhab.org), example configuration contained in "openhab_examples" folder
 
 ## Requirements to build the firmware:
 To build the firmware you need the particle-cli tool which you may install with (nodejs required):

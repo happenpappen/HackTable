@@ -26,6 +26,8 @@ void loadSettings();
 MQTT client(MQTT_HOST, 1883, mqtt_callback);
 Timer PublisherTimer(5000, publishState);
 
+ApplicationWatchdog wd(60000, System.reset);
+
 // functions to call via cloud:
 int incBrightness(String command);
 int decBrightness(String command);
@@ -67,29 +69,30 @@ void mqtt_callback(char *topic, byte *payload, unsigned int length)
     memcpy(myPayload, payload, length);
     myPayload[length] = 0;
 
-
+    String myID = System.deviceID();
+    
     if (!client.isConnected()) {
-        client.connect("tisch", MQTT_USER, MQTT_PASSWORD);
+        client.connect(myID, MQTT_USER, MQTT_PASSWORD);
     }
 
-    client.publish("/tisch/state/LastPayload", "Last Payload: " + String(myPayload));
+    client.publish("/"+myID+"/state/LastPayload", "Last Payload: " + String(myPayload));
 
-    if (myTopic == "/tisch/set/DisplayMode") {
+    if (myTopic == "/"+myID+"/set/DisplayMode") {
         setDisplayMode(String(myPayload));
         stateChanged = true;
     }
 
-    if (myTopic == "/tisch/set/Brightness") {
+    if (myTopic == "/"+myID+"/set/Brightness") {
         setBrightness(String(myPayload));
         stateChanged = true;
     }
 
-    if (myTopic == "/tisch/set/ForgroundColor") {
+    if (myTopic == "/"+myID+"/set/ForgroundColor") {
         setFgColor(String(myPayload));
         stateChanged = true;
     }
 
-    if (myTopic == "/tisch/set/BackgroundColor") {
+    if (myTopic == "/"+myID+"/set/BackgroundColor") {
         setBgColor(String(myPayload));
         stateChanged = true;
     }
@@ -262,15 +265,18 @@ void loadSettings()
 void publishState()
 {
 
+    String myID = System.deviceID();
+    
     if (!client.isConnected()) {
-        client.connect("tisch", MQTT_USER, MQTT_PASSWORD);
+        client.connect(myID, MQTT_USER, MQTT_PASSWORD);
     }
 
     if (client.isConnected()) {
-        client.publish("/tisch/state/DisplayMode", String(getDisplayMode("")));
-        client.publish("/tisch/state/Brightness", String(getBrightness("")));
-        client.publish("/tisch/state/ForgroundColor", getFgColor());
-        client.publish("/tisch/state/BackgroundColor", getBgColor());
+        client.publish("/"+myID+"/state/DisplayMode", String(getDisplayMode("")));
+        client.publish("/"+myID+"/state/Brightness", String(getBrightness("")));
+        client.publish("/"+myID+"/state/ForgroundColor", getFgColor());
+        client.publish("/"+myID+"/state/BackgroundColor", getBgColor());
+        client.publish("/"+myID+"/state/FirmwareVersion", System.version());
     }
 }
 
@@ -327,11 +333,11 @@ void setup()
     FastLED.addLeds<WS2812B, DATA_PIN>(leds, NUM_LEDS);
     FastLED.setBrightness(brightness);
 
-    client.connect("tisch", MQTT_USER, MQTT_PASSWORD); // uid:pwd based authentication
+    client.connect(System.deviceID(), MQTT_USER, MQTT_PASSWORD); // uid:pwd based authentication
 
     if (client.isConnected()) {
         PublisherTimer.start();
-        client.subscribe("/tisch/set/+");
+        client.subscribe("/System.deviceID()/set/+");
     }
 
 }
