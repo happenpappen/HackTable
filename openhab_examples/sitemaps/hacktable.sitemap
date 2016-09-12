@@ -1,0 +1,6 @@
+Frame label="HackTable:" {
+   Selection item=HackTable_DisplayMode label="Program" icon="slider" mappings=[1="Game of Life",2=Noise,3="Datum und Uhr",4=Regenbogen,5=NoisePlus,6=Einfarbig]
+   Slider item=HackTable_Brightness label="Brightness" icon="light" minValue="0" maxValue="255" step="1"
+   Colorpicker item=HackTable_ForgroundColor label="FGColor:" icon="slider"
+   Colorpicker item=HackTable_BackgroundColor label="BGColor:" icon="slider"
+}
