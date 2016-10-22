@@ -157,7 +157,7 @@ int disableDisplay(String command)
 String getFgColor()
 {
 
-    return String::format("#%0#2X%0#2X%0#2X", fg_color.red, fg_color.green, fg_color.blue);
+    return String::format("#%0.2x%0.2x%0.2x", fg_color.red, fg_color.green, fg_color.blue);
 
 }
 
@@ -184,7 +184,7 @@ int setFgColor(String command)
 String getBgColor()
 {
 
-    return String::format("#%0#2X%0#2X%0#2X", bg_color.red, bg_color.green, bg_color.blue);
+    return String::format("#%0.2x%0.2x%0.2x", bg_color.red, bg_color.green, bg_color.blue);
 }
 
 int setBgColor(String command)
