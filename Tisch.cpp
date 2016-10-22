@@ -157,7 +157,7 @@ int disableDisplay(String command)
 String getFgColor()
 {
 
-    return String::format("#%0.2x%0.2x%0.2x", fg_color.red, fg_color.green, fg_color.blue);
+    return String::format("%0.3d,%0.3d,%0.3d", fg_color.red, fg_color.green, fg_color.blue);
 
 }
 
@@ -168,8 +168,8 @@ int setFgColor(String command)
     rgbstr = strcpy(rgbstr, (const char *) command);
 
     if (command.length() == 11) {
-        int r = atoi(strsep(&rgbstr, ","));
         int g = atoi(strsep(&rgbstr, ","));
+        int r = atoi(strsep(&rgbstr, ","));
         int b = atoi(strsep(&rgbstr, ","));
 
         fg_color = CRGB(r, g, b);
@@ -184,7 +184,7 @@ int setFgColor(String command)
 String getBgColor()
 {
 
-    return String::format("#%0.2x%0.2x%0.2x", bg_color.red, bg_color.green, bg_color.blue);
+    return String::format("%0.3d,%0.3d,%0.3d", bg_color.red, bg_color.green, bg_color.blue);
 }
 
 int setBgColor(String command)
@@ -194,8 +194,8 @@ int setBgColor(String command)
     rgbstr = strcpy(rgbstr, (const char *) command);
 
     if (command.length() == 11) {
-        int r = atoi(strsep(&rgbstr, ","));
         int g = atoi(strsep(&rgbstr, ","));
+        int r = atoi(strsep(&rgbstr, ","));
         int b = atoi(strsep(&rgbstr, ","));
 
         bg_color = CRGB(r, g, b);
