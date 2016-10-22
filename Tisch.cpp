@@ -337,7 +337,7 @@ void setup()
 
     if (client.isConnected()) {
         PublisherTimer.start();
-        client.subscribe("/System.deviceID()/set/+");
+        client.subscribe("/"+System.deviceID()+"/set/+");
     }
 
 }
