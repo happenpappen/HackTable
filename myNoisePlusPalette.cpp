@@ -14,8 +14,8 @@ void mapNoiseToLEDsUsingPalette()
 {
     static uint8_t ihue = 0;
 
-    for (int i = 0; i < kMatrixWidth; i++) {
-        for (int j = 0; j < kMatrixHeight; j++) {
+    for (int i = 0; i < kMatrixHeight; i++) {
+        for (int j = 0; j < kMatrixWidth; j++) {
             // We use the value at the (i,j) coordinate in the noise
             // array for our brightness, and the flipped value from (j,i)
             // for our pixel's index into the color palette.
