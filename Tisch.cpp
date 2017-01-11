@@ -6,6 +6,7 @@
 #include "myUtils.h"
 #include "myTimeDate.h"
 #include "myRainbowCycle.h"
+#include "myFire.h"
 #include "mySingleColor.h"
 #include "MQTT.h"
 #include "MQTT_credentials.h"
@@ -52,6 +53,7 @@ unsigned long lastSync = millis();
 // 4: RainbowCycle
 // 5: NoisePlusPalette
 // 6: SingleColor
+// 7: Fire
 
 int dispMode = 2;
 
@@ -156,9 +158,7 @@ int disableDisplay(String command)
 
 String getFgColor()
 {
-
     return String::format("%0.3d,%0.3d,%0.3d", fg_color.red, fg_color.green, fg_color.blue);
-
 }
 
 int setFgColor(String command)
@@ -183,7 +183,6 @@ int setFgColor(String command)
 
 String getBgColor()
 {
-
     return String::format("%0.3d,%0.3d,%0.3d", bg_color.red, bg_color.green, bg_color.blue);
 }
 
@@ -235,6 +234,9 @@ int setDisplayMode(String command)
     case 6:
         setupSingleColor();
         break;
+    case 7:
+        setupFire();
+        break;
     default:
         break;
     }
@@ -257,7 +259,7 @@ void loadSettings()
     bg_color.b = EEPROM.read(address++);
     displayEnabled = EEPROM.read(address++);
 
-    for (int i = 0; i++; i < NUM_LEDS) {
+    for (int i = 0; i < NUM_LEDS; i++) {
         leds[i] = EEPROM.read(address++);
     }
 }
@@ -294,7 +296,7 @@ void saveSettings()
     EEPROM.write(address++, bg_color.b);
     EEPROM.write(address++, displayEnabled);
 
-    for (int i = 0; i++; i < NUM_LEDS) {
+    for (int i = 0; i < NUM_LEDS; i++) {
         EEPROM.write(address++, leds[i]);
     }
 }
@@ -324,6 +326,9 @@ void setup()
         break;
     case 6:
         setupSingleColor();
+        break;
+    case 7:
+        setupFire();
         break;
     default:
         break;
@@ -371,6 +376,9 @@ void loop()
             break;
         case 6:
             loopSingleColor();
+            break;
+        case 7:
+            loopFire();
             break;
         default:
             break;

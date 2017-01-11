@@ -6,9 +6,15 @@ uint8_t noise[MAX_DIMENSION][MAX_DIMENSION];
 uint16_t speed = 3; // speed is set dynamically once we've started up
 uint16_t scale = 30; // scale is set dynamically once we've started up
 
-uint16_t XY(uint8_t x, uint8_t y)
-{
-    return (y * kMatrixWidth) + x;
+uint16_t XY(uint8_t x, uint8_t y) {
+    int n = (y * kMatrixHeight) + x;
+    if (n < 0) {
+        return 0;
+    }
+    if (n > NUM_LEDS) {
+        return NUM_LEDS;
+    }
+    return n;
 }
 
 /*

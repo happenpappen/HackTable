@@ -27,8 +27,8 @@ int neighbours(int x, int y)
 void init_matrix()
 {
 
-    for (int x = 0; x < kMatrixWidth; x++) {
-        for (int y = 0; y < kMatrixHeight; y++) {
+    for (int x = 0; x < kMatrixHeight; x++) {
+        for (int y = 0; y < kMatrixWidth; y++) {
             if (random(100) < DENSITY) {
                 world[x][y][0] = 1;
                 leds[XY(x, y)] = fg_color;
@@ -60,8 +60,8 @@ void loopGameOfLife()
     living_cells_old = living_cells;
     living_cells = 0;
 
-    for (x = 0; x < kMatrixWidth; x++) {
-        for (y = 0; y < kMatrixHeight; y++) {
+    for (x = 0; x < kMatrixHeight; x++) {
+        for (y = 0; y < kMatrixWidth; y++) {
             // Default is for cell to stay the same
             world[x][y][1] = world[x][y][0];
             count = neighbours(x, y);
@@ -83,8 +83,8 @@ void loopGameOfLife()
         init_matrix();
     } else {
         // Copy next generation into place
-        for (x = 0; x < kMatrixWidth; x++) {
-            for (y = 0; y < kMatrixHeight; y++) {
+        for (x = 0; x < kMatrixHeight; x++) {
+            for (y = 0; y < kMatrixWidth; y++) {
                 world[x][y][0] = world[x][y][1];
                 if (world[x][y][1] != 0) {
                     leds[XY(x, y)] = fg_color;

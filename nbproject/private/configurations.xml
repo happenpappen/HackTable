@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="97">
+<configurationDescriptor version="100">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <df root="." name="0">
       <df name="openhab_examples">
@@ -85,6 +85,8 @@
       <in>myASCIIFont_6bit.h</in>
       <in>myASCIIFont_7bit.h</in>
       <in>myASCIIFont_8bit.h</in>
+      <in>myFire.cpp</in>
+      <in>myFire.h</in>
       <in>myGameOfLife.cpp</in>
       <in>myGameOfLife.h</in>
       <in>myNoise.cpp</in>
@@ -146,8 +148,9 @@
       <runprofile version="9">
         <runcommandpicklist>
           <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
+          <runcommandpicklistitem>particle flash tisch photon_firmware_*.bin</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}"</runcommand>
+        <runcommand>particle flash tisch photon_firmware_*.bin</runcommand>
         <rundir>.</rundir>
         <buildfirst>false</buildfirst>
         <terminal-type>0</terminal-type>
