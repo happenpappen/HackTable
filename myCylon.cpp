@@ -21,23 +21,24 @@ void loopCylon() {
 	for(int i = 0; i < kMatrixHeight; i++) {
         for(int j = 0; j < kMatrixWidth; j++) {
 		    // Set the i'th led to red 
-		    leds[XY(i,j)] = CHSV(hue++, 255, 255);
-		    // Show the leds
-		    FastLED.show(); 
-		    // now that we've shown the leds, reset the i'th led to black
-		    // leds[i] = CRGB::Black;
-		    fadeall();
-		    // Wait a little bit before we loop around and do it again
-		    delay(100);
+		    leds[XY(i,j)] = CHSV(hue, 255, 255);
 	    }
+		hue++;
+        // Show the leds
+		FastLED.show(); 
+		// now that we've shown the leds, reset the i'th led to black
+		// leds[i] = CRGB::Black;
+		fadeall();
+		// Wait a little bit before we loop around and do it again
+		delay(100);
     }
 	// Now go in the other direction.  
 	for(int i = (kMatrixHeight)-1; i >= 0; i--) {
-		// Set the i'th led to red 
-		leds[i] = CHSV(hue++, 255, 255);
-                leds[2*kMatrixHeight-i] = CHSV(hue, 255, 255);
-                leds[i+2*kMatrixHeight] = CHSV(hue, 255, 255);
-                leds[4*kMatrixHeight-i] = CHSV(hue, 255, 255);
+        for(int j = 0; j < kMatrixWidth; j++) {
+		    // Set the i'th led to red 
+		    leds[XY(i,j)] = CHSV(hue, 255, 255);
+	    }
+        hue++;
 		// Show the leds
 		FastLED.show();
 		// now that we've shown the leds, reset the i'th led to black
