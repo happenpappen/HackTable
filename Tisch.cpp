@@ -1,6 +1,7 @@
 #include "myTischConfig.h"
 #include "myGameOfLife.h"
 #include "myASCII.h"
+#include "myCylon.h"
 #include "myNoise.h"
 #include "myNoisePlusPalette.h"
 #include "myUtils.h"
@@ -54,6 +55,7 @@ unsigned long lastSync = millis();
 // 5: NoisePlusPalette
 // 6: SingleColor
 // 7: Fire
+// 8: Cylon
 
 int dispMode = 2;
 
@@ -237,6 +239,9 @@ int setDisplayMode(String command)
     case 7:
         setupFire();
         break;
+    case 8:
+        setupCylon();
+        break;
     default:
         break;
     }
@@ -330,6 +335,9 @@ void setup()
     case 7:
         setupFire();
         break;
+    case 8:
+        setupCylon();
+        break;
     default:
         break;
     }
@@ -379,6 +387,9 @@ void loop()
             break;
         case 7:
             loopFire();
+            break;
+        case 8:
+            loopCylon();
             break;
         default:
             break;
