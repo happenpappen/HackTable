@@ -2,25 +2,36 @@
 <configurationDescriptor version="100">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <df root="." name="0">
-      <in>FastLED.cpp</in>
-      <in>MQTT.cpp</in>
-      <in>Tisch.cpp</in>
-      <in>colorpalettes.cpp</in>
-      <in>colorutils.cpp</in>
-      <in>hsv2rgb.cpp</in>
-      <in>lib8tion.cpp</in>
-      <in>myASCII.cpp</in>
-      <in>myFire.cpp</in>
-      <in>myGameOfLife.cpp</in>
-      <in>myNoise.cpp</in>
-      <in>myNoisePlusPalette.cpp</in>
-      <in>myRainbowCycle.cpp</in>
-      <in>mySingleColor.cpp</in>
-      <in>myTimeDate.cpp</in>
-      <in>myUtils.cpp</in>
-      <in>noise.cpp</in>
-      <in>power_mgt.cpp</in>
-      <in>wiring.cpp</in>
+      <df name="src">
+        <in>MQTT_credentials.h</in>
+        <in>Tisch.ino</in>
+        <in>myASCII.cpp</in>
+        <in>myASCII.h</in>
+        <in>myASCIIFont_6bit.h</in>
+        <in>myASCIIFont_7bit.h</in>
+        <in>myASCIIFont_8bit.h</in>
+        <in>myCylon.cpp</in>
+        <in>myCylon.h</in>
+        <in>myFire.cpp</in>
+        <in>myFire.h</in>
+        <in>myGameOfLife.cpp</in>
+        <in>myGameOfLife.h</in>
+        <in>myMatrix.cpp</in>
+        <in>myMatrix.h</in>
+        <in>myNoise.cpp</in>
+        <in>myNoise.h</in>
+        <in>myNoisePlusPalette.cpp</in>
+        <in>myNoisePlusPalette.h</in>
+        <in>myRainbowCycle.cpp</in>
+        <in>myRainbowCycle.h</in>
+        <in>mySingleColor.cpp</in>
+        <in>mySingleColor.h</in>
+        <in>myTimeDate.cpp</in>
+        <in>myTimeDate.h</in>
+        <in>myTischConfig.h</in>
+        <in>myUtils.cpp</in>
+        <in>myUtils.h</in>
+      </df>
     </df>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -64,43 +75,61 @@
           <preBuildCommand></preBuildCommand>
         </preBuild>
       </makefileType>
-      <item path="FastLED.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/MQTT_credentials.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="MQTT.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/Tisch.ino" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="Tisch.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/myASCII.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="colorpalettes.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/myASCII.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="colorutils.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/myASCIIFont_6bit.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="hsv2rgb.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/myASCIIFont_7bit.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="lib8tion.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/myASCIIFont_8bit.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="myASCII.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/myCylon.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="myFire.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/myCylon.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="myGameOfLife.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/myFire.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="myNoise.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/myFire.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="myNoisePlusPalette.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/myGameOfLife.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="myRainbowCycle.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/myGameOfLife.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="mySingleColor.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/myMatrix.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="myTimeDate.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/myMatrix.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="myUtils.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/myNoise.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="noise.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/myNoise.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="power_mgt.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/myNoisePlusPalette.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="wiring.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/myNoisePlusPalette.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/myRainbowCycle.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/myRainbowCycle.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/mySingleColor.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/mySingleColor.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/myTimeDate.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/myTimeDate.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/myTischConfig.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/myUtils.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/myUtils.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>
