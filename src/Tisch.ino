@@ -8,6 +8,7 @@
 #include "myTimeDate.h"
 #include "myRainbowCycle.h"
 #include "myFire.h"
+#include "myMatrix.h"
 #include "mySingleColor.h"
 #include "MQTT.h"
 #include "MQTT_credentials.h"
@@ -43,6 +44,7 @@ int setFgColor(String command);
 int setBgColor(String command);
 
 #define DATA_PIN 7
+#define COLOR_ORDER GRB
 
 #define ONE_DAY_MILLIS (24 * 60 * 60 * 1000)
 unsigned long lastSync = millis();
@@ -74,7 +76,7 @@ void mqtt_callback(char *topic, byte *payload, unsigned int length)
     myPayload[length] = 0;
 
     String myID = System.deviceID();
-    
+
     if (!client.isConnected()) {
         client.connect(myID, MQTT_USER, MQTT_PASSWORD);
     }
@@ -170,8 +172,8 @@ int setFgColor(String command)
     rgbstr = strcpy(rgbstr, (const char *) command);
 
     if (command.length() == 11) {
-        int g = atoi(strsep(&rgbstr, ","));
         int r = atoi(strsep(&rgbstr, ","));
+        int g = atoi(strsep(&rgbstr, ","));
         int b = atoi(strsep(&rgbstr, ","));
 
         fg_color = CRGB(r, g, b);
@@ -195,8 +197,8 @@ int setBgColor(String command)
     rgbstr = strcpy(rgbstr, (const char *) command);
 
     if (command.length() == 11) {
-        int g = atoi(strsep(&rgbstr, ","));
         int r = atoi(strsep(&rgbstr, ","));
+        int g = atoi(strsep(&rgbstr, ","));
         int b = atoi(strsep(&rgbstr, ","));
 
         bg_color = CRGB(r, g, b);
@@ -242,6 +244,9 @@ int setDisplayMode(String command)
     case 8:
         setupCylon();
         break;
+    case 9:
+        setupMatrix();
+        break;
     default:
         break;
     }
@@ -273,7 +278,7 @@ void publishState()
 {
 
     String myID = System.deviceID();
-    
+
     if (!client.isConnected()) {
         client.connect(myID, MQTT_USER, MQTT_PASSWORD);
     }
@@ -311,6 +316,7 @@ void setup()
 
     loadSettings();
 
+    // FIXME: Remove next line
     dispMode = 2;
 
     switch (dispMode) {
@@ -338,12 +344,15 @@ void setup()
     case 8:
         setupCylon();
         break;
+    case 9:
+        setupMatrix();
+        break;
     default:
         break;
     }
 
     Time.zone(+1);
-    FastLED.addLeds<WS2812B, DATA_PIN>(leds, NUM_LEDS);
+    FastLED.addLeds<WS2812B, DATA_PIN, COLOR_ORDER>(leds, NUM_LEDS);
     FastLED.setBrightness(brightness);
 
     client.connect(System.deviceID(), MQTT_USER, MQTT_PASSWORD); // uid:pwd based authentication
@@ -390,6 +399,9 @@ void loop()
             break;
         case 8:
             loopCylon();
+            break;
+        case 9:
+            loopMatrix();
             break;
         default:
             break;
