@@ -1,3 +1,10 @@
+/*
+ * Original code taken from:
+ *
+ * https://github.com/FastLED/FastLED/blob/master/examples/XYMatrix/XYMatrix.ino
+ *
+ */
+
 #include "myTischConfig.h"
 #include "myUtils.h"
 
