@@ -1,7 +1,7 @@
 #include "myTischConfig.h"
 #include "myUtils.h"
 
-extern CRGB leds[NUM_LEDS];
+extern cLEDMatrix<kMatrixWidth, kMatrixHeight, HORIZONTAL_MATRIX> leds;
 
 static uint16_t x;
 static uint16_t y;
@@ -24,7 +24,7 @@ void loopNoise() {
 
     for (int i = 0; i < kMatrixHeight; i++) {
         for (int j = 0; j < kMatrixWidth; j++) {
-            leds[XY(i, j)] = CHSV(noise[j][i], 255, noise[i][j]);
+            leds(XY(i, j)) = CHSV(noise[j][i], 255, noise[i][j]);
         }
     }
 

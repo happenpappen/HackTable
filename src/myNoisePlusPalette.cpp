@@ -1,7 +1,7 @@
 #include "myTischConfig.h"
 #include "myUtils.h"
 
-extern CRGB leds[NUM_LEDS];
+extern cLEDMatrix<kMatrixWidth, kMatrixHeight, HORIZONTAL_MATRIX> leds;
 
 static uint16_t x;
 static uint16_t y;
@@ -37,7 +37,7 @@ void mapNoiseToLEDsUsingPalette()
             }
 
             CRGB color = ColorFromPalette(currentPalette, index, bri);
-            leds[XY(i, j)] = color;
+            leds(XY(i, j)) = color;
         }
     }
 

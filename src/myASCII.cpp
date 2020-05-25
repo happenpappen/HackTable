@@ -1,7 +1,7 @@
 #include "myTischConfig.h"
 #include "myASCIIFont_6bit.h"
 
-extern CRGB leds[NUM_LEDS];
+extern cLEDMatrix<kMatrixWidth, kMatrixHeight, HORIZONTAL_MATRIX> leds;
 extern uint8_t brightness;
 extern CRGB fg_color;
 extern CRGB bg_color;
@@ -10,7 +10,7 @@ void zeile_loeschen(int zeile)
 {
     if (zeile >= 0) {
         for (int i = 0 ; i < kMatrixHeight ; i++) {
-            leds[zeile + i * kMatrixWidth] = bg_color;
+            leds(zeile + i * kMatrixWidth) = bg_color;
         }
     }
 }
@@ -22,11 +22,11 @@ void zeichnenPos(byte zeichen[], int posx, int posy, CRGB fg_color, CRGB bg_colo
             if ((spalte + posx >= 0) && (spalte + posx < kMatrixHeight)) {
                 if (zeichen[7 - zeile] & (1 << (FONT_WIDTH - spalte))) {
                     if (((spalte + posx) <= kMatrixHeight) && ((spalte + posx) >= 0)) {
-                        leds[posx + spalte + (posy + zeile)*kMatrixHeight - 1] = fg_color;
+                        leds(posx + spalte + (posy + zeile)*kMatrixHeight - 1) = fg_color;
                     }
                 } else {
                     if (((spalte + posx) <= kMatrixHeight) && ((spalte + posx) >= 0)) {
-                        leds[posx + spalte + (posy + zeile)*kMatrixHeight - 1] = bg_color;
+                        leds(posx + spalte + (posy + zeile)*kMatrixHeight - 1) = bg_color;
                     }
                 }
 

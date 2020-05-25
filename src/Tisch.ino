@@ -10,10 +10,12 @@
 #include "myFire.h"
 #include "myMatrix.h"
 #include "mySingleColor.h"
+#include "mySpaceInvader.h"
 #include "MQTT.h"
 #include "MQTT_credentials.h"
 
-CRGB leds[NUM_LEDS];
+//CRGB leds[NUM_LEDS];
+cLEDMatrix<kMatrixWidth, kMatrixHeight, HORIZONTAL_MATRIX> leds;
 
 uint8_t brightness = 20;
 CRGB fg_color = CRGB(200, 200, 200);
@@ -43,6 +45,7 @@ int getDisplayMode(String command);
 int setFgColor(String command);
 int setBgColor(String command);
 
+#define BL_RESET_PIN 6
 #define DATA_PIN 7
 #define COLOR_ORDER GRB
 
@@ -50,14 +53,16 @@ int setBgColor(String command);
 unsigned long lastSync = millis();
 
 // Display modes:
-// 1: GameOfLife
-// 2: Noise
-// 3: Time and Date
-// 4: RainbowCycle
-// 5: NoisePlusPalette
-// 6: SingleColor
-// 7: Fire
-// 8: Cylon
+//  1: GameOfLife
+//  2: Noise
+//  3: Time and Date
+//  4: RainbowCycle
+//  5: NoisePlusPalette
+//  6: SingleColor
+//  7: Fire
+//  8: Cylon
+//  9: Matrix
+// 10: SpaceInvader
 
 int dispMode = 2;
 
@@ -247,6 +252,9 @@ int setDisplayMode(String command)
     case 9:
         setupMatrix();
         break;
+    case 10:
+        setupSpaceInvader();
+        break;
     default:
         break;
     }
@@ -270,7 +278,7 @@ void loadSettings()
     displayEnabled = EEPROM.read(address++);
 
     for (int i = 0; i < NUM_LEDS; i++) {
-        leds[i] = EEPROM.read(address++);
+        leds(i) = EEPROM.read(address++);
     }
 }
 
@@ -307,13 +315,32 @@ void saveSettings()
     EEPROM.write(address++, displayEnabled);
 
     for (int i = 0; i < NUM_LEDS; i++) {
-        EEPROM.write(address++, leds[i]);
+        EEPROM.write(address++, leds(i));
+    }
+}
+
+// Serial Event callback:
+//
+void serialEvent1()
+{
+    String myID = System.deviceID();
+
+    Particle.publish("serialEvent1 called!");
+    
+    char c = Serial1.read();
+    //Serial.print(c);
+    if (client.isConnected()) {
+        client.publish("/"+myID+"/state/SerialEvent", String("Char recieved: " + c));
     }
 }
 
 void setup()
 {
-
+    pinMode(BL_RESET_PIN,OUTPUT);
+    digitalWrite(BL_RESET_PIN, LOW);
+    delay(100);
+    Serial1.begin(9600, SERIAL_8N1);
+    
     loadSettings();
 
     // FIXME: Remove next line
@@ -347,12 +374,15 @@ void setup()
     case 9:
         setupMatrix();
         break;
+    case 10:
+        setupSpaceInvader();
+        break;
     default:
         break;
     }
 
     Time.zone(+1);
-    FastLED.addLeds<WS2812B, DATA_PIN, COLOR_ORDER>(leds, NUM_LEDS);
+    FastLED.addLeds<WS2812B, DATA_PIN, COLOR_ORDER>(leds[0], leds.Size());
     FastLED.setBrightness(brightness);
 
     client.connect(System.deviceID(), MQTT_USER, MQTT_PASSWORD); // uid:pwd based authentication
@@ -364,8 +394,19 @@ void setup()
 
 }
 
-void loop()
-{
+void loop() {
+    if (Serial1.available()) // if data is available to read
+    {
+        String myID = System.deviceID();
+
+        Particle.publish("Serial data received!");
+
+        char c = Serial1.read();
+        //Serial.print(c);
+        if (client.isConnected()) {
+            client.publish("/" + myID + "/state/SerialData", "Char recieved: " + String(c));
+        }
+    }
 
     // once a day sync time with cloud:
     if (millis() - lastSync > ONE_DAY_MILLIS) {
@@ -403,13 +444,16 @@ void loop()
         case 9:
             loopMatrix();
             break;
+        case 10:
+            loopSpaceInvader();
+            break;
         default:
             break;
         }
     } else {
         for (int i = 0; i < kMatrixWidth; i++) {
             for (int j = 0; j < kMatrixHeight; j++) {
-                leds[XY(i, j)] = 0;
+                leds(XY(i, j)) = 0;
             }
         }
     }

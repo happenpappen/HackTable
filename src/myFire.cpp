@@ -5,13 +5,13 @@
 #include "myTischConfig.h"
 #include "myUtils.h"
 
-extern CRGB leds[NUM_LEDS];
+extern cLEDMatrix<kMatrixWidth, kMatrixHeight, HORIZONTAL_MATRIX> leds;
 
 static byte heat[kMatrixHeight][kMatrixWidth];
 
 void setupFire() {
     for (int i = 0; i < NUM_LEDS; i++) {
-        leds[i] = 0;
+        leds(i) = 0;
     }
 }
 
@@ -66,11 +66,11 @@ void loopFire() {
 
             // figure out which third of the spectrum we're in:
             if (t192 > 0x80) { // hottest
-                leds[XY(i, j)] = CRGB(255, 255, heatramp);
+                leds(XY(i, j)) = CRGB(255, 255, heatramp);
             } else if (t192 > 0x40) { // middle
-                leds[XY(i, j)] = CRGB(heatramp, 255, 0);
+                leds(XY(i, j)) = CRGB(heatramp, 255, 0);
             } else { // coolest
-                leds[XY(i, j)] = CRGB(0, heatramp, 0);
+                leds(XY(i, j)) = CRGB(0, heatramp, 0);
             }
         }
     }

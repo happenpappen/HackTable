@@ -4,7 +4,7 @@
 #define DELAY 1000
 #define DENSITY 40
 
-extern CRGB leds[NUM_LEDS];
+extern cLEDMatrix<kMatrixWidth, kMatrixHeight, HORIZONTAL_MATRIX> leds;
 extern CRGB fg_color;
 extern CRGB bg_color;
 
@@ -31,10 +31,10 @@ void init_matrix()
         for (int y = 0; y < kMatrixWidth; y++) {
             if (random(100) < DENSITY) {
                 world[x][y][0] = 1;
-                leds[XY(x, y)] = fg_color;
+                leds(XY(x, y)) = fg_color;
             } else {
                 world[x][y][0] = 0;
-                leds[XY(x, y)] = bg_color;
+                leds(XY(x, y)) = bg_color;
             }
             world[x][y][1] = 0;
         }
@@ -87,9 +87,9 @@ void loopGameOfLife()
             for (y = 0; y < kMatrixWidth; y++) {
                 world[x][y][0] = world[x][y][1];
                 if (world[x][y][1] != 0) {
-                    leds[XY(x, y)] = fg_color;
+                    leds(XY(x, y)) = fg_color;
                 } else {
-                    leds[XY(x, y)] = bg_color;
+                    leds(XY(x, y)) = bg_color;
                 }
             }
         }

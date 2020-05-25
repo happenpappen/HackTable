@@ -1,7 +1,7 @@
 #include "myTischConfig.h"
 #include "myUtils.h"
 
-extern CRGB leds[NUM_LEDS];
+extern cLEDMatrix<kMatrixWidth, kMatrixHeight, HORIZONTAL_MATRIX> leds;
 extern CRGB fg_color;
 extern CRGB bg_color;
 
@@ -11,7 +11,7 @@ void setupRainbowCycle()
 {
     for (int i = 0; i < kMatrixWidth; i++) {
         for (int j = 0; j < kMatrixHeight; j++) {
-            leds[XY(i, j)] = bg_color;
+            leds(XY(i, j)) = bg_color;
         }
     }
 }
@@ -43,7 +43,7 @@ void loopRainbowCycle()
 
     //for(j=0; j<256*5; j++) { // 5 cycles of all colors on wheel
     for (i = 0; i < NUM_LEDS; i++) {
-        leds[i] = Wheel(((i * 256 / NUM_LEDS) + j) & 255);
+        leds(i) = Wheel(((i * 256 / NUM_LEDS) + j) & 255);
     }
     //strip.show();
     delay(20);
